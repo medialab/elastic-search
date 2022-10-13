@@ -1,0 +1,62 @@
+{
+    "mappings":
+        {"properties":{
+            "title_clea":{
+                "type":"text"
+            },
+            "content":{
+                "type":"text"
+            },
+            "date":{
+                "type":"date",
+                "format":"yyyy-MM-dd"
+            },
+            "journal_recod":{
+                "type":"text",
+                "fields": {
+                    "keyword": {
+                    "type": "keyword"
+                    }
+                }
+            },
+            "journal_diffusion":{
+                "type":"text",
+                "fields": {
+                    "keyword": {
+                    "type": "keyword"
+                    }
+                }
+            },
+            "journal_topic":{
+                "type":"text",
+                "fields": {
+                    "keyword": {
+                    "type": "keyword"
+                    }
+                }
+            },
+            "Cluster_level1":{
+                "type":"text",
+                "fields": {
+                    "keyword": {
+                    "type": "keyword"
+                    }
+                }
+            },
+            "Cluster_level2":{
+                "type":"text",
+                "fields": {
+                    "keyword": {
+                    "type": "keyword"
+                    }
+                }
+            },
+            "probability":{
+                "type":"float"
+            },
+            "code":{
+                "type":"keyword"
+            }
+        }
+    }
+}

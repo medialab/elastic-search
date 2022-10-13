@@ -1,0 +1,8 @@
+{
+    "ELASTIC_PASSWORD":"PASSWORD",
+    "USR_LOGIN":"elastic",
+    "CERT_FINGERPRINT":"FINGERPRINT",
+    "INDEX_NAME":"shai",
+    "DATA_FILE":"FILE_IN_DATA_FOLDER",
+    "URL":"https://localhost:9200/"
+}
