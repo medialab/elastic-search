@@ -49,10 +49,7 @@ def main(filename, index):
     with open("db_mappings.json", "r") as f:
         mapping = json.load(f)
 
-    #if not client.indices.exists(index=index):
-    #    client.indices.create(index=index, **mapping)
-    if client.indices.exists(index=index):
-        client.indices.delete(index=index)
+    if not client.indices.exists(index=index):
         client.indices.create(index=index, **mapping)
 
     # ----------------------------------------------------#
