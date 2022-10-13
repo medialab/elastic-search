@@ -23,5 +23,5 @@ $ pip install -r requirements
 ## Run
 
 ```python
-python index.py
+python index.py INDEX_NAME
 ```
