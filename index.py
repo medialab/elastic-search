@@ -8,11 +8,21 @@ from tqdm.auto import tqdm
 
 
 @click.command()
+@click.argument("filename")
 @click.argument("index")
-def main(index):
+def main(filename, index):
+
+    # ----------------------------------------------------#
+    # CONFIRM DATA SOURCE
+
+    if not os.path.isfile(filename):
+        raise FileNotFoundError(f"\n    The data file was not found. The path given was: {filename}")
+    else:
+        DATA = filename
 
     # ----------------------------------------------------#
     # CONFIGURATION FOR ELASTIC SEARCH CLIENT
+
     PERSONAL_CONFIG = "config.json"
     EXAMPLE_CONFIG = "example.config.json"
 
@@ -22,14 +32,14 @@ def main(index):
 
     with open(config, "r") as f:
         config = json.load(f)
-        ELASTIC_PASSWORD = config["ELASTIC_PASSWORD"]
-        CERT_FINGERPRINT = config["CERT_FINGERPRINT"]
-        DATA = os.path.join("data", config["DATA_FILE"])
+        ELASTIC_PASSWORD = config["ELASTIC_PASS"]
+        CERT_FINGERPRINT = config["ELASTIC_CERT_FINGERPRINT"]
+        ELASTIC_HOST = config["ELASTIC_HOST"]
 
     # ----------------------------------------------------#
     # CREATE CLIENT
     client = Elasticsearch(
-        "https://localhost:9200",
+        ELASTIC_HOST,
         ssl_assert_fingerprint=CERT_FINGERPRINT,
         basic_auth=("elastic", ELASTIC_PASSWORD)
         )
@@ -39,7 +49,10 @@ def main(index):
     with open("db_mappings.json", "r") as f:
         mapping = json.load(f)
 
-    if not client.indices.exists(index=index):
+    #if not client.indices.exists(index=index):
+    #    client.indices.create(index=index, **mapping)
+    if client.indices.exists(index=index):
+        client.indices.delete(index=index)
         client.indices.create(index=index, **mapping)
 
     # ----------------------------------------------------#
@@ -49,15 +62,10 @@ def main(index):
 
         total = len(list(csv_reader))
         f.seek(0)
-        csv_reader.__next__()
+        next(csv_reader)
 
-        pbar = tqdm(total=total, desc="Progress Bar", dynamic_ncols=True)
-
-        for row in csv_reader:
+        for row in tqdm(csv_reader, total=total, desc="Progress Bar", dynamic_ncols=True):
             client.index(index=index, id=row.pop("unique_id"), document=row)
-            pbar.update(len(row)/10)
-
-        pbar.close()
 
 
 if __name__ == "__main__":

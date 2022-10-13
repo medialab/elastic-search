@@ -12,16 +12,15 @@ $ pip install -r requirements
 ## Configuration
 ```json
 {
-    "ELASTIC_PASSWORD":"Password for the elastic user",
-    "USR_LOGIN":"elastic",
-    "CERT_FINGERPRINT":"HTTP CA certificate SHA-256 fingerprint",
-    "DATA_FILE":"example.csv",
-    "URL":"https://localhost:9200/"
+    "ELASTIC_PASS":"Password for the elastic user",
+    "ELASTIC_USER":"elastic",
+    "ELASTIC_CERT_FINGERPRINT":"HTTP CA certificate SHA-256 fingerprint",
+    "ELASTIC_HOST":"https://localhost:9200/"
 }
 ```
 
 ## Run
 
 ```python
-python index.py INDEX_NAME
+python index.py DATA_FILE INDEX_NAME
 ```
