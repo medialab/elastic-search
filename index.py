@@ -57,7 +57,8 @@ def main(filename, index):
     with open(DATA, "r") as f:
         csv_reader = csv.DictReader(f)
 
-        total = len(list(csv_reader))
+        for row in csv_reader: pass
+        total = csv_reader.line_num
         f.seek(0)
         next(csv_reader)
 
