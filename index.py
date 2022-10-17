@@ -32,17 +32,21 @@ def main(filename, index):
 
     with open(config, "r") as f:
         config = json.load(f)
-        ELASTIC_PASSWORD = config["ELASTIC_PASS"]
-        CERT_FINGERPRINT = config["ELASTIC_CERT_FINGERPRINT"]
+        ELASTIC_PASSWORD = config.get("ELASTIC_PASS")
+        ELASTIC_USER = config.get("ELASTIC_USER")
+        CERT_FINGERPRINT = config.get("ELASTIC_CERT_FINGERPRINT")
         ELASTIC_HOST = config["ELASTIC_HOST"]
 
     # ----------------------------------------------------#
     # CREATE CLIENT
-    client = Elasticsearch(
-        ELASTIC_HOST,
-        ssl_assert_fingerprint=CERT_FINGERPRINT,
-        basic_auth=("elastic", ELASTIC_PASSWORD)
-        )
+    if ELASTIC_PASSWORD:
+        client = Elasticsearch(
+            ELASTIC_HOST,
+            ssl_assert_fingerprint=CERT_FINGERPRINT,
+            basic_auth=(ELASTIC_USER, ELASTIC_PASSWORD)
+            )
+    else:
+        client = Elasticsearch(ELASTIC_HOST)
 
     # ----------------------------------------------------#
     # CREATE INDEX WITH MAPPING
