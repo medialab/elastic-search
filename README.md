@@ -11,7 +11,7 @@
 ./bin/elasticsearch
 ```
 
-> Note: When running elastic search locally, it may be useful to input a URL of the following composition: `https://` + `ELASTIC_USER` + `ELASTIC_PASS` + `@localhost:9200`
+> Note: When running elastic search locally, it may be useful to input a URL of the following composition: `https://` + `ELASTIC_USER` + `:` + `ELASTIC_PASS` + `@localhost:9200`
 
 
 - Python dependencies (installed in an activated virtual environment)
